@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== "production") {
 } else {
   app.use(
     cors({
-      origin: "https://autumn-notes-7.onrender.com", // your deployed frontend URL
+      origin: "https://autumn-notes.onrender.com", // your deployed frontend URL
     })
   );
 }
