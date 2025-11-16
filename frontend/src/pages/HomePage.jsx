@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import NoteCard from "../components/NoteCard";
 import NotesNotFound from "../components/NotesNotFound";
-
+import api from '../lib/axios'; 
 const SkeletonCard = () => (
   <div className="animate-pulse bg-white/30 rounded-2xl p-4 h-56 w-full shadow-xl shadow-black/40">
     <div className="h-28 bg-white/50 rounded-md" />
@@ -22,7 +22,8 @@ const HomePage = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/api/notes");
+        const res = await api.get("/notes");
+
         setNotes(res.data);
       } catch (error) {
         console.error("Error fetching notes:", error);
