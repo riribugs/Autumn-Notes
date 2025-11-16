@@ -14,10 +14,18 @@ const app = express();
 const __dirname = path.resolve();
 
 // 3️⃣ Apply middleware
+
+// CORS setup for development and production
 if (process.env.NODE_ENV !== "production") {
   app.use(
     cors({
-      origin: "http://localhost:5173",
+      origin: "http://localhost:5173", // frontend dev server URL
+    })
+  );
+} else {
+  app.use(
+    cors({
+      origin: "https://autumn-notes-7.onrender.com", // your deployed frontend URL
     })
   );
 }
@@ -28,11 +36,12 @@ app.use(rateLimiter);
 // 4️⃣ Define routes
 app.use("/api/notes", notesRoutes);
 
+// Serve frontend in production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
   });
 }
 
